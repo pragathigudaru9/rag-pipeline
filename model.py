@@ -26,8 +26,32 @@ def load_text_directory(directory):
 
     return texts
 
-# Step 3 - extract_text_from_html (not yet solved)
-# TODO: implement
+# Step 3 - extract_text_from_html
+from html.parser import HTMLParser
+from html import unescape
+
+class TextExtractor(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.text = []
+        self.skip = False
+
+    def handle_starttag(self, tag, attrs):
+        if tag in ("script", "style"):
+            self.skip = True
+
+    def handle_endtag(self, tag):
+        if tag in ("script", "style"):
+            self.skip = False
+
+    def handle_data(self, data):
+        if not self.skip:
+            self.text.append(data)
+
+def extract_text_from_html(html):
+    parser = TextExtractor()
+    parser.feed(html)
+    return "".join(parser.text).strip()
 
 # Step 4 - normalize_text (not yet solved)
 # TODO: implement
