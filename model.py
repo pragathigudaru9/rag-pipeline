@@ -155,8 +155,11 @@ def attach_chunk_metadata(chunks, source):
 
     return result
 
-# Step 11 - load_embedding_model (not yet solved)
-# TODO: implement
+# Step 11 - load_embedding_model
+from sentence_transformers import SentenceTransformer
+
+def load_embedding_model(model_name):
+    return SentenceTransformer(model_name)
 
 # Step 12 - embed_text (not yet solved)
 # TODO: implement
